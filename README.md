@@ -2,34 +2,36 @@
 
 ![Mosquitto Logo](https://mosquitto.org/images/mosquitto-text-side-28.png 'Mosquitto')
 
-This is a simple [Mosquitto](https://mosquitto.org) broker to quickly initialize projects requiring an MQTT broker.
+# Basic Docker setup for a TLS enabled MQTT Server
 
-## Prerequisite
+This project establishes an MQTT broker with TLS and user
+authentication.  Most actions including the generation of certificates
+are performed using GNU make to reduce errors introduced with manual
+procedures.  You can print help using the command `make help`.
 
-- [Docker](https://www.docker.com/)
-- [Docker compose](https://docs.docker.com/compose/) +v1.27.0 (better to have v2)
-
-## How to use
-
-To start the container, just :
+## Setup
 
 ```bash
-UID=$UID GID=$GID docker-compose up -d
+git clone https://github.com/paddy-314/mosquitto-mqtt.git
+cd mosquitto-mqtt
+
+# specify your IP or domain-name here ↓
+sudo /bin/bash make_keys.sh '1.2.3.4'
+docker compose up -d
 ```
 
-The Mosquitto broker is now available on localhost. You can test it easily (require Mosquitto client):
+## Test
 
-| In one shell:
-
+1. Verify that the broker is running with `docker-compose ps`
+2. Subscribe to the /world topic:
 ```bash
-mosquitto_sub -h localhost -t "sensor/temperature"
+mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca.crt --cert mqtt/certs/client.crt --key mqtt/certs/client.key -t /world
 ```
-
-| In a second shell:
-
+3. Manually publish a message:
 ```bash
-mosquitto_pub -h localhost -t sensor/temperature -m 23
+mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca.crt --cert mqtt/certs/client.crt --key mqtt/certs/client.key -m hello -t /world
 ```
+4. Verify that the subscriber prints out the `hello` message to the `/world` topic.
 
 ## Configuration
 
@@ -61,37 +63,3 @@ docker-compose exec mosquitto mosquitto_passwd -b /mosquitto/config/password.txt
 ```bash
 docker-compose exec mosquitto mosquitto_passwd -D /mosquitto/config/password.txt user
 ```
-
-
-
-# Basic Docker setup for a TLS enabled MQTT Server
-
-This project establishes an MQTT broker with TLS and user
-authentication.  Most actions including the generation of certificates
-are performed using GNU make to reduce errors introduced with manual
-procedures.  You can print help using the command `make help`.
-
-## Setup
-
-```bash
-git clone https://github.com/paddy-314/mosquitto-mqtt.git
-cd mosquitto-mqtt
-
-# specify your IP or domain-name here ↓
-sudo /bin/bash make_keys.sh '1.2.3.4'
-docker compose up -d
-```
-
-## Test
-
-1. Start the MQTT broker using `make start`.
-2. Verify that the broker is running with `docker-compose ps`
-3. Subscribe to the /world topic:
-```bash
-mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca.crt --cert mqtt/certs/client.crt --key mqtt/certs/client.key -t /world
-```
-4. Manually publish a message:
-```bash
-mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca.crt --cert mqtt/certs/client.crt --key mqtt/certs/client.key -m hello -t /world
-```
-5. Verify that the subscriber prints out the `hello` message to the `/world` topic.
