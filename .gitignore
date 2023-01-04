@@ -1,10 +1,8 @@
 # exclude certs
 config/certs/*
-!config/certs/.gitkeep 
+!config/certs/.gitkeep
+
 
 # exclude logs
 log/*
 !log/.gitkeep 
-
-# exclude passwords
-password.txt
