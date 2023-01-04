@@ -30,3 +30,4 @@ generate_client
 rm -rf /mqtt
 mkdir /mqtt &> /dev/null
 cp -R $CERTPATH /mqtt
+chmod +r /mqtt -R
