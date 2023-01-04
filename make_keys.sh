@@ -22,7 +22,11 @@ function generate_client () {
    openssl x509 -req -sha256 -in "$CERTPATH/client.csr" -CA "$CERTPATH/ca.crt" -CAkey "$CERTPATH/ca.key" -CAcreateserial -out "$CERTPATH/client.crt" -days "$DAYS"
 }
 
+rm -rf $CERTPATH
 mkdir $CERTPATH &> /dev/null
 generate_CA
 generate_server
 generate_client
+rm -rf /mqtt
+mkdir /mqtt &> /dev/null
+cp -R $CERTPATH /mqtt
