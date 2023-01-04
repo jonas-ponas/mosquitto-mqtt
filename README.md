@@ -78,7 +78,7 @@ git clone https://github.com/paddy-314/mosquitto-mqtt.git
 cd mosquitto-mqtt
 
 # specify your IP or domain-name here ↓
-sudo /bin/bash make_keys.sh '80.158.79.218'
+sudo /bin/bash make_keys.sh '1.2.3.4'
 docker compose up -d
 ```
 
@@ -92,6 +92,6 @@ mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'passwor
 ```
 4. Manually publish a message:
 ```bash
-mosquitto_pub -h localhost -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca/ca.crt --cert mqtt/certs/clients/example_user.crt --key mqtt/certs/clients/example_user.key -m hello -t /world
+mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca.crt --cert mqtt/certs/client.crt --key mqtt/certs/client.key -m hello -t /world
 ```
 5. Verify that the subscriber prints out the `hello` message to the `/world` topic.
