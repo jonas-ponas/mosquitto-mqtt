@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IP="localhost"
+IP=$1
 SUBJECT="/C=/ST=/L=/O="
 SUBJECT_CA="$SUBJECT/OU=CA/CN=$IP"
 SUBJECT_SERVER="$SUBJECT/OU=Server/CN=$IP"
