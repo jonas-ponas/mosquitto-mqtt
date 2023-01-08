@@ -1,3 +1,6 @@
+> **careful**: this is the docker compose file for a public MQTT-Server 
+this exposes the port 1883 and 9001 to the internet, if port-forwarding is enabled. It generates TLS-certificates with the script and can be customized based on your region.
+
 # Simple Mosquitto broker
 
 ![Mosquitto Logo](https://mosquitto.org/images/mosquitto-text-side-28.png 'Mosquitto')
