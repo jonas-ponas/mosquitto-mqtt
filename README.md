@@ -28,11 +28,11 @@ docker compose up -d
 1. Verify that the broker is running with `docker-compose ps`
 2. Subscribe to the /world topic:
 ```bash
-mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca.crt --cert mqtt/certs/client.crt --key mqtt/certs/client.key -t /world
+mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile /mqtt/certs/ca.crt --cert /mqtt/certs/client.crt --key /mqtt/certs/client.key -t /world
 ```
 3. Manually publish a message:
 ```bash
-mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile mqtt/certs/ca.crt --cert mqtt/certs/client.crt --key mqtt/certs/client.key -m hello -t /world
+mosquitto_pub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile /mqtt/certs/ca.crt --cert /mqtt/certs/client.crt --key /mqtt/certs/client.key -m hello -t /world
 ```
 4. Verify that the subscriber prints out the `hello` message to the `/world` topic.
 
