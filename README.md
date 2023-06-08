@@ -10,7 +10,7 @@ this exposes the port 1883 and 9001 to the internet, if port-forwarding is enabl
 This project establishes an MQTT broker with TLS and user
 authentication.  Most actions including the generation of certificates
 are performed using GNU make to reduce errors introduced with manual
-procedures.  You can print help using the command `make help`.
+procedures.
 
 ## Setup
 
@@ -25,7 +25,7 @@ docker compose up -d
 
 ## Test
 
-1. Verify that the broker is running with `docker-compose ps`
+1. Verify that the broker is running with `docker compose ps`
 2. Subscribe to the /world topic:
 ```bash
 mosquitto_sub -h <ip/fqdn (same as in certificate)> -p 1883 -u admin -P 'password' --cafile /mqtt/certs/ca.crt --cert /mqtt/certs/client.crt --key /mqtt/certs/client.key -t /world
