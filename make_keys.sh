@@ -19,7 +19,7 @@ function generate_server () {
 
 function generate_client () {
    openssl req -new -nodes -sha256 -subj "$SUBJECT_CLIENT" -out "$CERTPATH/client.csr" -keyout "$CERTPATH/client.key"
-   openssl x509 -req -sha256 -in "$CERTPATH/client.csr" -CA "$CERTPATH/ca.crt" -CAkey "$CERTPATH/ca.key" -CAcreateserial -out "$CERTPATH/client.crt" -days "$DAYS"
+   openssl x509 -req -extfile <(printf "subjectAltName=IP.1:$IP")  -sha256 -in "$CERTPATH/client.csr" -CA "$CERTPATH/ca.crt" -CAkey "$CERTPATH/ca.key" -CAcreateserial -out "$CERTPATH/client.crt" -days "$DAYS"
 }
 
 rm -rf $CERTPATH
