@@ -1,13 +1,14 @@
 services:
   mosquitto:
-    image: eclipse-mosquitto:2.0-openssl
-    volumes:
-      - ./config/:/mosquitto/config/
-      - ./log/:/mosquitto/log/
-      - data:/mosquitto/data/
+    build: ./mosquitto
+    #container_name: mosquitto-secure
     ports:
-      - 1883:1883
-      - 9001:9001
-
-volumes:
-  data: ~
+      - "8883:8883"
+    environment:
+      - MQTT_IP=127.0.0.1
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      #- ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/certs:/certs
+    restart: unless-stopped
