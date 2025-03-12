@@ -1,11 +1,3 @@
 # exclude certs
-mosquitto/certs/*
-!mosquitto/certs/.gitkeep
-
-# exclude db
-mosquitto/data/*
-!mosquitto/data/.gitkeep 
-
-# exclude logs
-mosquitto/log/*
-!/mosquitto/log/.gitkeep
+certificates/*
+!certificates/.gitkeep
